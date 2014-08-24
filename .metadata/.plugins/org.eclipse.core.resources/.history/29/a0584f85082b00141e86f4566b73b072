@@ -1,0 +1,30 @@
+package hay.chris.smartunlock;
+
+import android.app.admin.DeviceAdminReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+
+public class DeviceAdmin extends DeviceAdminReceiver {
+
+	
+	public DeviceAdmin() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public void onEnabled(Context context, Intent intent){
+		super.onEnabled(context, intent);
+//		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+//		SharedPreferences.Editor preferences = settings.edit();
+//		preferences.putBoolean("enable_device_admin", true);
+//		preferences.commit();
+	}
+
+	@Override
+	public void onDisabled(Context context, Intent intent){
+		super.onDisabled(context, intent);
+	}
+}

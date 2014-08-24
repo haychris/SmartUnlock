@@ -1,13 +1,24 @@
 package hay.chris.smartunlock;
 
+import java.util.List;
+
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -15,9 +26,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.text.InputType;
 import android.text.TextUtils;
-
-import java.util.List;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -38,6 +53,7 @@ public class SettingsActivity extends PreferenceActivity{
 	 * shown on tablets.
 	 */
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
+    protected static final int REQUEST_CODE_ENABLE_ADMIN=1;
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -68,11 +84,18 @@ public class SettingsActivity extends PreferenceActivity{
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_notification);
 
+		//reset Password listener and sets summary
+		findPreference("enable_device_admin").setOnPreferenceChangeListener(sActionableValueChange);
+		Preference tempPreference = findPreference("password_type");
+		tempPreference.setOnPreferenceChangeListener(sActionableValueChange);
+		setSummaries(tempPreference, PreferenceManager.getDefaultSharedPreferences(
+				tempPreference.getContext()).getString(tempPreference.getKey(),
+				""));
+		
 		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
 		// their values. When their values change, their summaries are updated
 		// to reflect the new value, per the Android Design guidelines.
-		bindPreferenceSummaryToValue(findPreference("example_text"));
-		bindPreferenceSummaryToValue(findPreference("example_list"));
+		//bindPreferenceSummaryToValue(findPreference("password_type"));
 		bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
 	}
 
@@ -111,12 +134,185 @@ public class SettingsActivity extends PreferenceActivity{
 			loadHeadersFromResource(R.xml.pref_headers, target);
 		}
 	}
+	public void onActivityResult(int requestcode, int resultcode, Intent data){
+		Log.e("result", "true");
+		if (requestcode == 1){
+			if (resultcode == Activity.RESULT_OK){
+				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+				SharedPreferences.Editor preferences = settings.edit();
+				preferences.putBoolean("enable_device_admin", true);
+				preferences.commit();
+				((CheckBoxPreference)findPreference("enable_device_admin")).setChecked(true);
+			} else {
+				((CheckBoxPreference)findPreference("enable_device_admin")).setChecked(false);
+			}
+		}
+		
+	}
+	public void resetUI(Preference preference){
+		
+	}
+	private Preference.OnPreferenceChangeListener sActionableValueChange = new Preference.OnPreferenceChangeListener() {
+	
+		@Override
+		public boolean onPreferenceChange(Preference preference, Object newValue) {			
+        	if (preference.getKey().equals("enable_device_admin")) {
 
+				boolean boolValue = (Boolean) newValue;
+				Log.e("newValue", boolString(boolValue));
+	
+	
+				ComponentName deviceAdmin = new ComponentName(SettingsActivity.this, DeviceAdmin.class);
+	        	DevicePolicyManager mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+	            Log.e("isActiveBeforeSet", boolString(mDPM.isAdminActive(deviceAdmin)));
+	
+	        	//if (preference.getKey().equals("enable_device_admin")) {
+        		Log.e("keyMatch", "true");
+                if (boolValue != mDPM.isAdminActive(deviceAdmin)) {
+                	Log.e("startChange", "true");
+                    if (boolValue) {
+                        // Launch the activity to have the user enable our admin.
+                        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, deviceAdmin);
+                        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Needed for app to run");
+                        startActivityForResult(intent, REQUEST_CODE_ENABLE_ADMIN);
+                        // return false - don't update checkbox until we're really active
+                        return false;
+                    } else {
+                        mDPM.removeActiveAdmin(deviceAdmin);
+        				((CheckBoxPreference)findPreference("enable_device_admin")).setChecked(false);
+        				return false;
+                        //enableDeviceCapabilitiesArea(false);
+                    }
+                }
+            } else if (preference.getKey().equals("password_type")){
+            	int type = Integer.parseInt((String) newValue);
+            	Log.e("newValue", ((Integer)type).toString());
+            	if(type != 0) {
+            		storeDialog(false, type);
+            	} else {
+            		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+            		SharedPreferences.Editor preferences = settings.edit();
+      			  	preferences.putString("stored_password", "");
+      			  	preferences.commit();
+            	}
+            	setSummaries(preference, newValue);
+            	return true;
+            }
+            //Log.e("isActive", boolString(mDPM.isAdminActive(deviceAdmin)));
+            return false;
+		}
+	};
+	private void storeDialog(boolean failed, final int type){
+		AlertDialog.Builder alert = new AlertDialog.Builder(SettingsActivity.this);
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		
+		alert.setTitle("Set Password");
+		TextView setPassword = new TextView(this);
+		setPassword.setText("Enter Password");
+		TextView confirmPassword = new TextView(this);
+		confirmPassword.setText("Confirm Password");
+
+		
+		// Set an EditText view to get user input 
+		final EditText input = new EditText(this);
+		final EditText confirmInput = new EditText(this);
+		if (type == 1) {
+			input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+			confirmInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+		} else if (type == -1) {
+			input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+			confirmInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		} 
+		layout.addView(setPassword);
+		layout.addView(input);
+		layout.addView(confirmPassword);
+		layout.addView(confirmInput);
+
+		if (failed) {
+			TextView failedMessage = new TextView(this);
+			failedMessage.setText("Password did not match. Please enter again.");
+			failedMessage.setTextColor(Color.RED);
+			layout.addView(failedMessage);
+		}
+		alert.setView(layout);
+		
+		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  String value = input.getText().toString();
+		  String confirmValue = confirmInput.getText().toString();
+		  if (!value.equals(confirmValue)){
+			  storeDialog(true, type);
+		  } else {
+			  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+			  SharedPreferences.Editor preferences = settings.edit();
+			  preferences.putString("stored_password", value);
+			  preferences.commit();
+			  setSummaries(findPreference("password_type"), ((Integer)type).toString());
+		  }
+		  
+		  }
+		});
+
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+//			  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+//			  if (settings.getString("stored_password", "").equals("")) {
+//				  SharedPreferences.Editor preferences = settings.edit();
+//				  preferences.putString("password_type", "0");
+//				  preferences.commit();
+//				  sActionableValueChange.onPreferenceChange(findPreference("password_type"), "0");
+//			  }
+			  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
+			  if (settings.getString("stored_password", "").equals("")) {
+				  setSummaries(findPreference("password_type"), "0");
+			  } else {
+				  setSummaries(findPreference("password_type"), "1");
+			  }			  
+		  }
+		});
+
+		alert.show();
+	}
+	private String boolString(boolean bool){
+		if(bool){
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	private void setSummaries(Preference preference, Object newValue){
+//		ListPreference listPreference = (ListPreference) preference;
+//		int index = listPreference.findIndexOfValue((String) newValue);
+//
+//		// Set the summary to reflect the new value.
+//		preference
+//				.setSummary(index >= 0 ? listPreference.getEntries()[index]
+//						: null);
+		if (Integer.parseInt((String)newValue) != 0) {
+			preference.setSummary("Password Set");
+		} else {
+			preference.setSummary("No Password");
+		}
+	}
+	private void setValues(Preference preference, Object newValue) {
+		ListPreference listPreference = (ListPreference) preference;
+		int index = listPreference.findIndexOfValue((String) newValue);
+
+		// Set the summary to reflect the new value.
+		listPreference
+				.setValue((String) (index >= 0 ? listPreference.getEntryValues()[index]
+						: null));
+	}
 	/**
 	 * A preference value change listener that updates the preference's summary
 	 * to reflect its new value.
 	 */
 	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+		
+		
+		
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object value) {
 			String stringValue = value.toString();
@@ -154,7 +350,7 @@ public class SettingsActivity extends PreferenceActivity{
 						preference.setSummary(name);
 					}
 				}
-
+				
 			} else {
 				// For all other preferences, set the summary to the value's
 				// simple string representation.

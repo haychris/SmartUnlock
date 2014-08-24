@@ -10,5 +10,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
-
+    <string name="device_admin">Allows password management</string>
+    <string name="device_admin_description">Must be enabled in order to remove or set password</string>
+	<string name="add_app_admin_context">Testing, please ignore</string>
 </resources>
