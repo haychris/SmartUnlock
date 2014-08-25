@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:paddingTop="15dp"
+   android:paddingLeft="15dp"
+   android:paddingRight="15dp"
+   android:descendantFocusability="beforeDescendants">
+
+   <GridLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="15dp"
+      android:paddingTop="15dp"
+      android:paddingBottom="15dp"
+      android:paddingRight="15dp"
+      android:background="@drawable/combined_card_background"
+      android:descendantFocusability="afterDescendants"
+      android:numColumns= "2">
+
+      <TextView
+          android:id="@+id/timer_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:columnWidth="30dp"
+          android:text="Timer"
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:textSize="?android:attr/textAppearanceMedium" />
+
+      <TextView
+          android:id="@+id/timer_description"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:columnWidth="30dp"
+          android:text="Keep device unlocked for the duration of the timer"
+          android:textAppearance="?android:attr/textAppearanceSmall"
+          android:textSize="?android:attr/textAppearanceSmall" />
+
+   </GridLayout>
+
+</FrameLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SmartUnlock</string>
+    <string name="title_section1">Active</string>
+    <string name="title_section2">Conditions</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="device_admin">Allows password management</string>
+    <string name="device_admin_description">Must be enabled in order to remove or set password</string>
+    <string name="add_app_admin_context">Testing, please ignore</string>
+    <string name="title_activity_create_condition">CreateConditionActivity</string>
+
+</resources>

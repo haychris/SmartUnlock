@@ -26,7 +26,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class MainActivity extends Activity implements ActionBar.TabListener, TimeFragment.OnFragmentInteractionListener, LocationFragment.OnFragmentInteractionListener {
+public class MainActivity extends Activity implements ActionBar.TabListener, 
+ActiveFragment.OnFragmentInteractionListener, ConditionsFragment.OnFragmentInteractionListener,
+TimeFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -85,7 +87,20 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Tim
         }
     }
 
-
+    
+    
+    
+    
+   public void launchCreateCondition(View view) {
+	   Intent intent = new Intent(this, CreateConditionActivity.class);
+	   startActivity(intent);
+   }
+	
+	
+	
+	
+	
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -128,7 +143,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Tim
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+            super(fm);        
         }
 
         @Override
@@ -137,9 +152,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Tim
         	String param2 = "stuff";
         	switch(position) {
         		case 0:
-        			return TimeFragment.newInstance(param1, param2);
+        			return ActiveFragment.newInstance(param1, param2);
         		case 1:
-        			return LocationFragment.newInstance(param1, param2);
+        			return ConditionsFragment.newInstance(param1, param2);
         		default:
         			// getItem is called to instantiate the fragment for the given page.
                     // Return a PlaceholderFragment (defined as a static inner class below).
