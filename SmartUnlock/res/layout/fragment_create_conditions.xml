@@ -45,6 +45,16 @@
            android:layout_toRightOf="@id/timer_description"
            android:src="@drawable/ic_timer_icon" />
 
+       <TextView
+           android:id="@+id/timer_description2"
+           android:layout_width="200dp"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/timer_description"
+           android:animateLayoutChanges="true"
+           android:text="Keep device unlocked for the duration of the timer"
+           android:textAppearance="?android:attr/textAppearanceSmall"
+           android:visibility="gone" />
+
    </RelativeLayout> 
    
    <RelativeLayout

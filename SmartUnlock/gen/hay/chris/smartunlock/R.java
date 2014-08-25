@@ -48,24 +48,39 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
         public static final int ic_wifi_icon=0x7f020009;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0011;
+        public static final int action_settings=0x7f0a0020;
         public static final int add_button=0x7f0a0003;
+        public static final int add_image=0x7f0a0004;
         public static final int appwidget_text=0x7f0a0002;
-        public static final int bluetooth_description=0x7f0a0008;
-        public static final int bluetooth_title=0x7f0a0007;
+        public static final int bluetooth_description=0x7f0a000a;
+        public static final int bluetooth_image=0x7f0a000b;
+        public static final int bluetooth_title=0x7f0a0009;
+        public static final int button_cancel_timer=0x7f0a001e;
+        public static final int button_create_timer=0x7f0a001f;
         public static final int container=0x7f0a0000;
-        public static final int imageView1=0x7f0a0006;
-        public static final int imageView2=0x7f0a0009;
-        public static final int imageView3=0x7f0a000c;
-        public static final int imageView4=0x7f0a000f;
-        public static final int location_description=0x7f0a000e;
-        public static final int location_title=0x7f0a000d;
+        public static final int location_description=0x7f0a0010;
+        public static final int location_image=0x7f0a0011;
+        public static final int location_title=0x7f0a000f;
         public static final int pager=0x7f0a0001;
-        public static final int section_label=0x7f0a0010;
-        public static final int timer_description=0x7f0a0005;
-        public static final int timer_title=0x7f0a0004;
-        public static final int wifi_description=0x7f0a000b;
-        public static final int wifi_title=0x7f0a000a;
+        public static final int radio_after_unlock=0x7f0a0019;
+        public static final int radio_always=0x7f0a001b;
+        public static final int radio_between_times=0x7f0a001a;
+        public static final int radio_never=0x7f0a001c;
+        public static final int section_label=0x7f0a0012;
+        public static final int timer_body=0x7f0a0018;
+        public static final int timer_constructor_description=0x7f0a0015;
+        public static final int timer_constructor_image=0x7f0a0017;
+        public static final int timer_constructor_selector=0x7f0a0016;
+        public static final int timer_constructor_title=0x7f0a0014;
+        public static final int timer_description=0x7f0a0006;
+        public static final int timer_description2=0x7f0a0008;
+        public static final int timer_image=0x7f0a0007;
+        public static final int timer_main=0x7f0a0013;
+        public static final int timer_title=0x7f0a0005;
+        public static final int timer_unlock_body=0x7f0a001d;
+        public static final int wifi_description=0x7f0a000d;
+        public static final int wifi_image=0x7f0a000e;
+        public static final int wifi_title=0x7f0a000c;
     }
     public static final class layout {
         public static final int activity_create_condition=0x7f030000;
