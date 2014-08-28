@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+   	xmlns:android="http://schemas.android.com/apk/res/android" 
+  	android:layout_width="match_parent"
+   	android:layout_height="fill_parent">
+	<ListView
+	   android:id="@+id/conditions_listview"
+	   android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/combined_card_background"
+       android:descendantFocusability="afterDescendants"
+       android:layout_marginTop="10dp"
+       android:paddingBottom="15dp"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
+       android:paddingTop="15dp"
+	   android:layout_alignParentTop ="true" >
+	</ListView>
+	<RelativeLayout
+	   android:layout_width="match_parent"
+	   android:layout_height="wrap_content"
+	   android:layout_gravity="bottom"
+	   android:layout_alignParentBottom ="true">
+	   	<View
+    		android:layout_width="fill_parent"
+    		android:layout_height="1dp"
+   		 	android:background="@android:color/darker_gray"/>
+		<ImageView
+	           android:id="@+id/add_image"
+	           android:layout_width="50dp"
+	           android:layout_height="50dp"
+	           android:layout_centerVertical="true"
+	           android:layout_centerHorizontal="true"
+	           android:gravity="center"
+	           android:clickable="true"
+	   		   android:onClick="launchCreateCondition"
+	           android:src="@drawable/ic_add_icon" />
+		
+	</RelativeLayout>
+</RelativeLayout>
+  

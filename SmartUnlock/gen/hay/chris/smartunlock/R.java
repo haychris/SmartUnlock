@@ -9,12 +9,13 @@ package hay.chris.smartunlock;
 
 public final class R {
     public static final class array {
-        public static final int pref_example_list_titles=0x7f070000;
-        public static final int pref_example_list_values=0x7f070001;
-        public static final int pref_password_titles=0x7f070004;
-        public static final int pref_password_values=0x7f070005;
-        public static final int pref_sync_frequency_titles=0x7f070002;
-        public static final int pref_sync_frequency_values=0x7f070003;
+        public static final int pref_example_list_titles=0x7f070001;
+        public static final int pref_example_list_values=0x7f070002;
+        public static final int pref_password_titles=0x7f070005;
+        public static final int pref_password_values=0x7f070006;
+        public static final int pref_sync_frequency_titles=0x7f070003;
+        public static final int pref_sync_frequency_values=0x7f070004;
+        public static final int timer_spinner=0x7f070000;
     }
     public static final class attr {
     }
@@ -40,60 +41,70 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
         public static final int card_background_selected=0x7f020001;
         public static final int combined_card_background=0x7f020002;
         public static final int example_appwidget_preview=0x7f020003;
-        public static final int ic_add_icon=0x7f020004;
-        public static final int ic_bluetooth_icon=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int ic_location_icon=0x7f020007;
-        public static final int ic_timer_icon=0x7f020008;
-        public static final int ic_wifi_icon=0x7f020009;
+        public static final int ic_action_refresh=0x7f020004;
+        public static final int ic_add_icon=0x7f020005;
+        public static final int ic_bluetooth_icon=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int ic_location_icon=0x7f020008;
+        public static final int ic_timer_icon=0x7f020009;
+        public static final int ic_wifi_icon=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0020;
+        public static final int action_refresh=0x7f0a0028;
+        public static final int action_settings=0x7f0a0027;
         public static final int add_button=0x7f0a0003;
-        public static final int add_image=0x7f0a0004;
+        public static final int add_image=0x7f0a0009;
         public static final int appwidget_text=0x7f0a0002;
-        public static final int bluetooth_description=0x7f0a000a;
-        public static final int bluetooth_image=0x7f0a000b;
-        public static final int bluetooth_title=0x7f0a0009;
-        public static final int button_cancel_timer=0x7f0a001e;
-        public static final int button_create_timer=0x7f0a001f;
+        public static final int bluetooth_description=0x7f0a000f;
+        public static final int bluetooth_image=0x7f0a0010;
+        public static final int bluetooth_title=0x7f0a000e;
+        public static final int button_cancel_timer=0x7f0a0025;
+        public static final int button_create_timer=0x7f0a0026;
+        public static final int card_description=0x7f0a0006;
+        public static final int card_image=0x7f0a0007;
+        public static final int card_main=0x7f0a0004;
+        public static final int card_title=0x7f0a0005;
+        public static final int conditions_listview=0x7f0a0008;
         public static final int container=0x7f0a0000;
-        public static final int location_description=0x7f0a0010;
-        public static final int location_image=0x7f0a0011;
-        public static final int location_title=0x7f0a000f;
+        public static final int location_description=0x7f0a0015;
+        public static final int location_image=0x7f0a0016;
+        public static final int location_title=0x7f0a0014;
         public static final int pager=0x7f0a0001;
-        public static final int radio_after_unlock=0x7f0a0019;
-        public static final int radio_always=0x7f0a001b;
-        public static final int radio_between_times=0x7f0a001a;
-        public static final int radio_never=0x7f0a001c;
-        public static final int section_label=0x7f0a0012;
-        public static final int timer_body=0x7f0a0018;
-        public static final int timer_constructor_description=0x7f0a0015;
-        public static final int timer_constructor_image=0x7f0a0017;
-        public static final int timer_constructor_selector=0x7f0a0016;
-        public static final int timer_constructor_title=0x7f0a0014;
-        public static final int timer_description=0x7f0a0006;
-        public static final int timer_description2=0x7f0a0008;
-        public static final int timer_image=0x7f0a0007;
-        public static final int timer_main=0x7f0a0013;
-        public static final int timer_title=0x7f0a0005;
-        public static final int timer_unlock_body=0x7f0a001d;
-        public static final int wifi_description=0x7f0a000d;
-        public static final int wifi_image=0x7f0a000e;
-        public static final int wifi_title=0x7f0a000c;
+        public static final int radio_after_unlock=0x7f0a001e;
+        public static final int radio_always=0x7f0a0020;
+        public static final int radio_between_times=0x7f0a001f;
+        public static final int radio_never=0x7f0a0021;
+        public static final int section_label=0x7f0a0017;
+        public static final int text_for=0x7f0a001b;
+        public static final int timer_body=0x7f0a001d;
+        public static final int timer_constructor_description=0x7f0a001a;
+        public static final int timer_constructor_image=0x7f0a001c;
+        public static final int timer_constructor_title=0x7f0a0019;
+        public static final int timer_description=0x7f0a000b;
+        public static final int timer_description2=0x7f0a000d;
+        public static final int timer_editor=0x7f0a0022;
+        public static final int timer_image=0x7f0a000c;
+        public static final int timer_main=0x7f0a0018;
+        public static final int timer_spinner=0x7f0a0023;
+        public static final int timer_title=0x7f0a000a;
+        public static final int timer_unlock_body=0x7f0a0024;
+        public static final int wifi_description=0x7f0a0012;
+        public static final int wifi_image=0x7f0a0013;
+        public static final int wifi_title=0x7f0a0011;
     }
     public static final class layout {
         public static final int activity_create_condition=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int binary_lock_widget=0x7f030002;
         public static final int binary_lock_widget_configure=0x7f030003;
-        public static final int fragment_active=0x7f030004;
-        public static final int fragment_conditions=0x7f030005;
-        public static final int fragment_create_conditions=0x7f030006;
-        public static final int fragment_location=0x7f030007;
-        public static final int fragment_main=0x7f030008;
-        public static final int fragment_time=0x7f030009;
-        public static final int timer_layout=0x7f03000a;
+        public static final int condition_card=0x7f030004;
+        public static final int fragment_active=0x7f030005;
+        public static final int fragment_conditions=0x7f030006;
+        public static final int fragment_create_conditions=0x7f030007;
+        public static final int fragment_location=0x7f030008;
+        public static final int fragment_main=0x7f030009;
+        public static final int fragment_time=0x7f03000a;
+        public static final int timer_layout=0x7f03000b;
     }
     public static final class menu {
         public static final int create_condition=0x7f090000;

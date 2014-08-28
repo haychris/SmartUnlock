@@ -1,12 +1,20 @@
 package hay.chris.smartunlock;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -27,7 +35,32 @@ public class ConditionsFragment extends Fragment {
 	private String mParam2;
 
 	private OnFragmentInteractionListener mListener;
+	private Context fragContext;
+	private Activity currentActivity;
+	private ConditionAdapter cAdapter;
 
+	private class ConditionAdapter extends ArrayAdapter<ConditionObject> {
+
+		private Context mContext;
+		public ConditionAdapter(Context context, int resource, int textViewResourceId, ArrayList<ConditionObject> data) {
+			super(context, resource, textViewResourceId, data);
+			mContext = context;
+		}
+		public ConditionAdapter(Context context, int resource, ArrayList<ConditionObject> data) {
+			super(context, resource, data);
+			mContext = context;
+		}
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null) {
+				convertView = currentActivity.getLayoutInflater().inflate(R.layout.condition_card, parent, false);
+			}
+			return convertView;
+		}
+		
+	}
+	
+	
 	/**
 	 * Use this factory method to create a new instance of this fragment using
 	 * the provided parameters.
@@ -55,17 +88,80 @@ public class ConditionsFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		currentActivity = getActivity();
+		fragContext = getActivity().getApplicationContext();
+		removeAllConditions();
 		if (getArguments() != null) {
 			mParam1 = getArguments().getString(ARG_PARAM1);
 			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
+	}
+	public void refreshConditions(){
+		Log.e("test", "refreshing");
+		SharedPreferences prefs = fragContext.getSharedPreferences("hay.chris.smartunlock.condition_storage", 0);
+	    int currentConditionSize = prefs.getInt("total_condition_storage_size", 0);
+		if (cAdapter != null && cAdapter.getCount() != currentConditionSize) {
+			ConditionObject[] newData = new ConditionObject[currentConditionSize - cAdapter.getCount()];
+			for (int i = cAdapter.getCount(); i < currentConditionSize; i++){
+				newData[i - cAdapter.getCount()] = (ConditionObject.loadThatCondition(fragContext, "condition_storage" + i));
+			}
+			ArrayList<ConditionObject> lst = new ArrayList<ConditionObject>();
+			lst.addAll(Arrays.asList(newData));
+			Log.e("test", "newData" + newData.length);
+			cAdapter.addAll(lst);
+		}
+	}
+	public void removeCondition(int position){
+		
+	}
+	public void removeAllConditions() {
+		SharedPreferences prefs = fragContext.getSharedPreferences("hay.chris.smartunlock.condition_storage", 0);
+		SharedPreferences.Editor ed = prefs.edit();
+	    int currentConditionSize = prefs.getInt("total_condition_storage_size", 0);
+	    for (int i = 0; i < currentConditionSize; i++)
+	    	ed.remove("condition_storage" + i);
+	    ed.putInt("total_condition_storage_size", 0);
+	    ed.commit();
+	}
+	public void onResume(){
+		super.onResume();
+		refreshConditions();
+		
+		//cAdapter.notifyDataSetChanged();
+		
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_conditions, container, false);
+		ViewGroup view =  (ViewGroup) inflater.inflate(R.layout.fragment_conditions, container, false); 
+		ListView list = (ListView) view.findViewById(R.id.conditions_listview);
+		
+		SharedPreferences prefs = fragContext.getSharedPreferences("hay.chris.smartunlock.condition_storage", 0);
+	    int currentConditionSize = prefs.getInt("total_condition_storage_size", 0);
+	    if (cAdapter == null){
+		    ConditionObject[] data = new ConditionObject[currentConditionSize];
+		    for (int i = 0; i < currentConditionSize; i++){
+		    	data[i] = ConditionObject.loadThatCondition(fragContext, "condition_storage" + i);
+		    }
+		    ArrayList<ConditionObject> lst = new ArrayList<ConditionObject>();
+		    lst.addAll(Arrays.asList(data));
+		    cAdapter = new ConditionAdapter(fragContext, R.layout.condition_card, lst);
+		    cAdapter.setNotifyOnChange(true);
+	    } else {
+	    	refreshConditions();
+	    	Log.e("test", "refresh attempt");
+	    }
+	    if (list != null)
+	    	list.setAdapter(cAdapter);
+	    
+//	    View returnView = null;
+//	    for (int i = 0; i < currentConditionSize; i++) {
+//			returnView = inflater.inflate(R.layout.condition_card, view, true);
+//	    }
+		return view;
+		//return inflater.inflate(R.layout.fragment_conditions, container, false);
 	}
 	
 	

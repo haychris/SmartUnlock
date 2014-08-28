@@ -14,5 +14,11 @@
     <string name="device_admin_description">Must be enabled in order to remove or set password</string>
     <string name="add_app_admin_context">Testing, please ignore</string>
     <string name="title_activity_create_condition">Create New Condition</string>
+    
+    <string-array name="timer_spinner">
+        <item>Hours</item>
+        <item>Minutes</item>
+        <item>Seconds</item>
+    </string-array>
 
 </resources>

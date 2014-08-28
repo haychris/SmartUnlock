@@ -117,7 +117,11 @@ TimeFragment.OnFragmentInteractionListener {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
-        }
+        } else if (id == R.id.action_refresh) {
+            Fragment page = getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + mViewPager.getCurrentItem());
+            if (mViewPager.getCurrentItem() == 1 && page != null) {
+                ((ConditionsFragment)page).refreshConditions();     
+           }         }
         return super.onOptionsItemSelected(item);
     }
 
@@ -135,7 +139,7 @@ TimeFragment.OnFragmentInteractionListener {
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
-
+ 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.

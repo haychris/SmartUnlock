@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp" >
+	
+   <RelativeLayout
+       android:id="@+id/timer_main"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:background="@drawable/combined_card_background"
+       android:descendantFocusability="afterDescendants"
+       android:paddingBottom="15dp"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
+       android:paddingTop="15dp" >
+	  
+       <TextView
+           android:id="@+id/timer_constructor_title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Timer"
+           android:textAppearance="?android:attr/textAppearanceMedium" />
+
+       <TextView
+           android:id="@+id/timer_constructor_description"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/timer_constructor_title"
+           android:text="Remove lock "
+           android:textAppearance="?android:attr/textAppearanceSmall"
+           android:visibility="visible" />
+       <TextView
+               android:id="@+id/text_for"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_toRightOf="@id/timer_constructor_description"
+               android:layout_alignBottom="@id/timer_constructor_description"
+               android:text="for " />
+
+       
+       
+
+       <ImageView
+           android:id="@+id/timer_constructor_image"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="24dp"
+           android:layout_alignParentRight="true"
+           android:gravity="right"
+           android:src="@drawable/ic_timer_icon" />
+
+       
+
+           <RadioGroup
+               android:id="@+id/timer_body"
+               android:layout_width="200dp"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               android:orientation="vertical" 
+               android:layout_below="@id/timer_constructor_description" >
+
+               <RadioButton
+                   android:id="@+id/radio_after_unlock"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:onClick="onRadioTimerAfterUnlock"
+                   android:text="after successful login"
+                   android:textAppearance="?android:attr/textAppearanceSmall" />
+
+               <RadioButton
+                   android:id="@+id/radio_between_times"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:onClick="onRadioTimerBetweenTimes"
+                   android:text="between set times"
+                   android:textAppearance="?android:attr/textAppearanceSmall" />
+               <RadioButton
+                   android:id="@+id/radio_always"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:onClick="onRadioTimerAlways"
+                   android:text="Always"
+                   android:textAppearance="?android:attr/textAppearanceSmall" />
+               <RadioButton
+                   android:id="@+id/radio_never"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:onClick="onRadioTimerNever"
+                   android:text="Never"
+                   android:textAppearance="?android:attr/textAppearanceSmall" />
+           </RadioGroup>
+
+           <EditText
+               android:id="@+id/timer_editor"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignBaseline="@+id/text_for"
+               android:layout_alignBottom="@+id/text_for"
+               android:layout_toRightOf="@+id/text_for"
+               android:ems="10"
+               android:inputType="number"
+               android:maxWidth="50dp"
+               android:text="30"
+               android:textAppearance="?android:attr/textAppearanceSmall"
+               android:width="50dp" />
+           <Spinner
+               android:id="@+id/timer_spinner"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+ 			   android:layout_alignBaseline="@+id/text_for"
+               android:layout_alignBottom="@+id/text_for"
+               android:layout_toRightOf="@+id/timer_editor"
+               android:visibility="gone" />
+   </RelativeLayout>
+
+   <RelativeLayout
+       android:id="@+id/timer_unlock_body"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/combined_card_background"
+       android:descendantFocusability="afterDescendants"
+       android:paddingBottom="15dp"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
+       android:paddingTop="15dp"
+       android:visibility="gone" >
+
+       <Button
+           android:id="@+id/button_cancel_timer"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_centerVertical="true"
+           android:onClick="onTimerCancel"
+           android:text="Cancel" />
+
+       <Button
+           android:id="@+id/button_create_timer"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:layout_centerVertical="true"
+           android:background="#006400"
+           android:text="Create"
+           android:textColor="#FFFFFF"
+           android:onClick="onTimerCreate" />
+   </RelativeLayout>
+   
+</LinearLayout>
