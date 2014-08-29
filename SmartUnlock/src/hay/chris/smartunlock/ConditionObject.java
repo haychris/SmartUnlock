@@ -18,22 +18,24 @@ import android.util.Log;
 
 public class ConditionObject implements Serializable{
 	private String name;
+	private String setName;
 	private int type;
 	private Object data;
 	
-	private class TimerObject implements Serializable{
-		private int time;
-		private int timeType;
-		private boolean alwaysUnlocked;
+	public class TimerObject implements Serializable{
+		int radio;
+		int time;
+		int timeType;
+		boolean alwaysUnlocked;
 		TimerObject() {}
 	}
-	private class BluetoothObject implements Serializable{
+	public class BluetoothObject implements Serializable{
 		BluetoothObject() {}
 	}
-	private class WifiObject implements Serializable{
+	public class WifiObject implements Serializable{
 		WifiObject() {}
 	}
-	private class LocationObject implements Serializable{
+	public class LocationObject implements Serializable{
 		LocationObject(){}
 	}
 	public ConditionObject(int type, String name) {
@@ -51,14 +53,19 @@ public class ConditionObject implements Serializable{
 		}
 		
 	}
-	public void setTimer(int time, int timeType) {
+	public void setTimer(int time, int timeType, int radio) {
 		TimerObject timer = (TimerObject) data;
 		timer.time = time;
 		timer.timeType = timeType;
+		timer.radio = radio;
 	}
-	public void setTimer(boolean alwaysUnlocked) {
+	public void setTimer(int radio) {
 		TimerObject timer = (TimerObject) data;
-		timer.alwaysUnlocked = alwaysUnlocked;
+		if (radio == 2)
+			timer.alwaysUnlocked = true;
+		else if (radio == 3)
+			timer.alwaysUnlocked = false;
+		timer.radio = radio;
 	}
 	public int getTypeInt(){
 		return type;
@@ -74,6 +81,12 @@ public class ConditionObject implements Serializable{
 	}
 	public String getName(){
 		return name;
+	}
+	public String getSetName(){
+		return setName;
+	}
+	public void setSetName(String setName){
+		this.setName = setName;
 	}
 	public Object getData(){
 		return data;

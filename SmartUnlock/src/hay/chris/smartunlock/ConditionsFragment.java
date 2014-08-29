@@ -2,6 +2,8 @@ package hay.chris.smartunlock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -9,12 +11,16 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
@@ -55,7 +61,121 @@ public class ConditionsFragment extends Fragment {
 			if (convertView == null) {
 				convertView = currentActivity.getLayoutInflater().inflate(R.layout.condition_card, parent, false);
 			}
+			TextView title = (TextView) ((ViewGroup) convertView).getChildAt(0);
+			TextView description = (TextView) ((ViewGroup) convertView).getChildAt(1);
+			ImageView image = (ImageView) ((ViewGroup) convertView).getChildAt(2);
+			final int pos = position;
+			
+			ConditionObject condition = getItem(position);
+			final String conditionName = condition.getName();
+			int type = condition.getTypeInt();
+			switch(type){
+				case 0: 
+					image.setImageResource(R.drawable.ic_timer_icon_enabled); 
+					image.setOnClickListener(new OnClickListener() {
+												private boolean enabled = true;
+												public void onClick(View v) {
+													Drawable current = ((ImageView) v).getDrawable();
+													if (enabled) {
+														((ImageView) v).setImageResource(R.drawable.ic_timer_icon_disabled);
+														enabled = false;
+														activateCondition(conditionName);
+													} else {
+														((ImageView) v).setImageResource(R.drawable.ic_timer_icon_enabled);
+														enabled = true;
+														disableCondition(conditionName);
+													}
+												}
+											});
+					title.setText(R.string.title_timer);
+					ConditionObject.TimerObject data = (ConditionObject.TimerObject) condition.getData();
+					switch(data.radio) {
+						case 0: 
+							String timeTypeName;
+							int setTimeAmount = data.time; //length of time in milliseconds
+							switch(data.timeType){
+								case 0: timeTypeName = " hours "; break;
+								case 1: timeTypeName = " minutes "; break;
+								case 2: timeTypeName = " seconds "; break;
+								default: timeTypeName = ""; break;
+							}
+							switch(data.timeType){
+								case 0: setTimeAmount *= 60;
+								case 1: setTimeAmount *= 60;
+								case 2: setTimeAmount *= 1000;
+								break;
+							}
+							description.setText("Disable lock for " + data.time + timeTypeName + "after successful login.");
+						break;
+						case 1:
+						break;
+						case 2: 
+							description.setText("Always disable lock.");
+						break;
+						case 3:
+							description.setText("Never disable lock.");
+						break;
+					}
+				break;
+				case 1:
+					image.setImageResource(R.drawable.ic_bluetooth_icon);
+					title.setText(R.string.title_bluetooth);
+					break;
+				case 2:
+					image.setImageResource(R.drawable.ic_wifi_icon);
+					title.setText(R.string.title_wifi);
+					break;
+				case 3:
+					image.setImageResource(R.drawable.ic_location_icon);
+					title.setText(R.string.title_location);
+					break;
+			}
 			return convertView;
+		}
+		protected void disableCondition(String name) {
+			// TODO Auto-generated method stub
+			
+		}
+		public String getSetName(String name){
+			return name;
+		}
+		protected void activateCondition(String name) {
+			// TODO Auto-generated method stub
+			ConditionObject condition = ConditionObject.loadThatCondition(mContext, name);
+			String curSetName = getSetName(name);
+			int type = condition.getTypeInt();
+			switch(type){
+			case 0: 
+				ConditionObject.TimerObject data = (ConditionObject.TimerObject) condition.getData();
+				switch(data.radio) {
+					case 0: 
+						SharedPreferences prefs = mContext.getSharedPreferences("hay.chris.smartunlock.condition_storage", 0);
+						SharedPreferences.Editor ed = prefs.edit();
+						//get list of all condition sets that are active
+						Set<String> activeConditionSets = prefs.getStringSet("active_condition_sets", new HashSet<String>());
+						//get list of all active conditions within this set
+						Set<String> curSetConditions = prefs.getStringSet(curSetName, new HashSet<String>());
+						//add this condition to its set
+						curSetConditions.add(name);
+						//add this set to the list of active sets
+						activeConditionSets.add(curSetName);
+						ed.commit();
+					break;
+					case 1:
+					break;
+					case 2: 
+					break;
+					case 3:
+					break;
+				}
+			break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
 		}
 		
 	}
@@ -110,6 +230,8 @@ public class ConditionsFragment extends Fragment {
 			Log.e("test", "newData" + newData.length);
 			cAdapter.addAll(lst);
 		}
+		((ListView) getView().findViewById(R.id.conditions_listview)).invalidateViews();
+
 	}
 	public void removeCondition(int position){
 		
@@ -126,9 +248,7 @@ public class ConditionsFragment extends Fragment {
 	public void onResume(){
 		super.onResume();
 		refreshConditions();
-		
-		//cAdapter.notifyDataSetChanged();
-		
+				
 	}
 
 	@Override
@@ -186,9 +306,9 @@ public class ConditionsFragment extends Fragment {
 	}
 
 	@Override
-	public void onDetach() {
+	public void onDetach() { 
 		super.onDetach();
-		mListener = null;
+		mListener = null;  
 	}
 
 	/**

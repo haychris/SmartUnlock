@@ -150,7 +150,7 @@ public class CreateConditionActivity extends Activity implements OnItemSelectedL
 		return views;
 	}
 	private void dismissAllViews(){
-		View[] views = getTimerViews();
+		View[] views = getTimerViews();    
 		for (View v: views) {
 			v.setVisibility(View.GONE);
 		}
@@ -202,21 +202,21 @@ public class CreateConditionActivity extends Activity implements OnItemSelectedL
 	    int currentConditionSize = prefs.getInt("total_condition_storage_size", 0);
 		int radio = ((RadioGroup)findViewById(R.id.timer_body)).getCheckedRadioButtonId();
 		String storageName = "condition_storage"+ currentConditionSize;
-		ConditionObject condition = new ConditionObject(0, storageName);
+		ConditionObject condition = new ConditionObject(0, storageName); 
 
 		switch (radio) {
 			case R.id.radio_after_unlock:
 				int time = Integer.parseInt(((EditText) findViewById(R.id.timer_editor)).getText().toString());
 				int timeType = ((Spinner) findViewById(R.id.timer_spinner)).getSelectedItemPosition();
-				condition.setTimer(time, timeType);
+				condition.setTimer(time, timeType, 0);
 				break; 
 			case R.id.radio_between_times:
 				break;
 			case R.id.radio_always:
-				condition.setTimer(true);
+				condition.setTimer(2);
 				break;
 			case R.id.radio_never:
-				condition.setTimer(false);
+				condition.setTimer(3);
 				break;
 		}
 		Log.e("test", "attempt save"); 

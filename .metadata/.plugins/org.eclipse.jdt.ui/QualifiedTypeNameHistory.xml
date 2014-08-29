@@ -4,11 +4,9 @@
 <fullyQualifiedTypeName name="android.preference.CheckBoxPreference"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="android.content.ComponentName"/>
-<fullyQualifiedTypeName name="hay.chris.smartunlock.R.string"/>
 <fullyQualifiedTypeName name="android.app.admin.DevicePolicyManager"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
 <fullyQualifiedTypeName name="android.content.DialogInterface"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.text.InputType"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
@@ -32,6 +30,14 @@
 <fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
 <fullyQualifiedTypeName name="hay.chris.smartunlock.R.layout"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
-<fullyQualifiedTypeName name="hay.chris.smartunlock.R.id"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="hay.chris.smartunlock.R.id"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="hay.chris.smartunlock.ConditionObject.TimerObject"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="android.widget.ImageView"/>
+<fullyQualifiedTypeName name="hay.chris.smartunlock.R.string"/>
+<fullyQualifiedTypeName name="android.graphics.drawable.Drawable"/>
+<fullyQualifiedTypeName name="hay.chris.smartunlock.R.drawable"/>
 </qualifiedTypeNameHistroy>

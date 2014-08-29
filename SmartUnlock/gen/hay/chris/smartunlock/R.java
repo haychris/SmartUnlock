@@ -41,13 +41,15 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
         public static final int card_background_selected=0x7f020001;
         public static final int combined_card_background=0x7f020002;
         public static final int example_appwidget_preview=0x7f020003;
-        public static final int ic_action_refresh=0x7f020004;
+        public static final int ic_action_refresh2=0x7f020004;
         public static final int ic_add_icon=0x7f020005;
         public static final int ic_bluetooth_icon=0x7f020006;
         public static final int ic_launcher=0x7f020007;
         public static final int ic_location_icon=0x7f020008;
         public static final int ic_timer_icon=0x7f020009;
-        public static final int ic_wifi_icon=0x7f02000a;
+        public static final int ic_timer_icon_disabled=0x7f02000a;
+        public static final int ic_timer_icon_enabled=0x7f02000b;
+        public static final int ic_wifi_icon=0x7f02000c;
     }
     public static final class id {
         public static final int action_refresh=0x7f0a0028;
@@ -121,32 +123,36 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
         public static final int device_admin_description=0x7f06000a;
         public static final int hello_blank_fragment=0x7f060005;
         public static final int hello_world=0x7f060003;
-        public static final int pref_default_display_name=0x7f060011;
-        public static final int pref_description_password=0x7f06001c;
+        public static final int pref_default_display_name=0x7f060015;
+        public static final int pref_description_password=0x7f060020;
         /**  Example settings for Data & Sync 
          */
-        public static final int pref_header_data_sync=0x7f060013;
+        public static final int pref_header_data_sync=0x7f060017;
         /**  Strings related to Settings 
  Example General settings 
          */
-        public static final int pref_header_general=0x7f06000e;
+        public static final int pref_header_general=0x7f060012;
         /**  Example settings for Notifications 
          */
-        public static final int pref_header_notifications=0x7f060016;
-        public static final int pref_ringtone_silent=0x7f060019;
-        public static final int pref_title_add_friends_to_messages=0x7f060012;
-        public static final int pref_title_device_admin=0x7f06000f;
-        public static final int pref_title_display_name=0x7f060010;
-        public static final int pref_title_new_message_notifications=0x7f060017;
-        public static final int pref_title_password=0x7f06001b;
-        public static final int pref_title_ringtone=0x7f060018;
-        public static final int pref_title_sync_frequency=0x7f060014;
-        public static final int pref_title_system_sync_settings=0x7f060015;
-        public static final int pref_title_vibrate=0x7f06001a;
+        public static final int pref_header_notifications=0x7f06001a;
+        public static final int pref_ringtone_silent=0x7f06001d;
+        public static final int pref_title_add_friends_to_messages=0x7f060016;
+        public static final int pref_title_device_admin=0x7f060013;
+        public static final int pref_title_display_name=0x7f060014;
+        public static final int pref_title_new_message_notifications=0x7f06001b;
+        public static final int pref_title_password=0x7f06001f;
+        public static final int pref_title_ringtone=0x7f06001c;
+        public static final int pref_title_sync_frequency=0x7f060018;
+        public static final int pref_title_system_sync_settings=0x7f060019;
+        public static final int pref_title_vibrate=0x7f06001e;
         public static final int title_activity_create_condition=0x7f06000c;
-        public static final int title_activity_settings=0x7f06000d;
+        public static final int title_activity_settings=0x7f060011;
+        public static final int title_bluetooth=0x7f06000e;
+        public static final int title_location=0x7f060010;
         public static final int title_section1=0x7f060001;
         public static final int title_section2=0x7f060002;
+        public static final int title_timer=0x7f06000d;
+        public static final int title_wifi=0x7f06000f;
     }
     public static final class style {
         /** 
